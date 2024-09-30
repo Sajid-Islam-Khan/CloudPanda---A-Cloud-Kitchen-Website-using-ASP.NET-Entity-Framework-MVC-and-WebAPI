@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f12ace9de227408098a27c27d77f57bd" Name="Diagram1">
+        <EntityTypeShape EntityType="CloudPandaModel.Franchise" Width="1.5" PointX="3.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CloudPandaModel.Meal" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CloudPandaModel.Order" Width="1.5" PointX="3.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CloudPandaModel.OrderMeal" Width="1.5" PointX="0.625" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CloudPandaModel.SellerFranchise" Width="1.5" PointX="8.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CloudPandaModel.User" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="CloudPandaModel.FK_Meal_Franchise" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_SellerFranchise_Franchise" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_Meal_OrderMeal" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_Order_OrderMeal" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_Order_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="CloudPandaModel.FK_SellerFranchise_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
