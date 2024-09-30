@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CloudPandaNew.Context.Order>
+
+@{
+    ViewBag.Title = "Cart";
+    double grandTotal = 0;
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Buyer Dashboard", "BuyerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "BuyerProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Purchase Meals", "BuyerPurchaseMeals", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Search Meal", "SearchMeal", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Meal Name</th>
+            <th>Quantity</th>
+            <th>Price </th>
+            <th>Total Price</th>
+            <th>Update Quantity</th> <!-- New column for updating quantity -->
+            <th>Action</th> <!-- New column for remove button -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            var meal = order.OrderMeal.Meals.FirstOrDefault();
+            if (meal != null)
+            {
+                double totalPrice = order.OrderMeal.Quantity * meal.Price;
+                grandTotal += totalPrice;
+
+                <tr>
+                    <td>@meal.Name</td>
+                    <td>@order.OrderMeal.Quantity</td>
+                    <td>@meal.Price.ToString() BDT</td> <!-- Price per item -->
+                    <td>@totalPrice.ToString() BDT</td> <!-- Total Price for the meal -->
+                    <td>
+                        <!-- Update Quantity Form -->
+                        @using (Html.BeginForm("UpdateQuantity", "Order", FormMethod.Post))
+                        {
+                            @Html.Hidden("orderId", order.Id) <!-- Hidden field for Order ID -->
+                            <input type="number" name="newQuantity" value="@order.OrderMeal.Quantity" min="1" class="form-control" style="width:80px;" />
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        }
+                    </td>
+                    <td>
+                        <!-- Remove from Cart Form -->
+                        @using (Html.BeginForm("RemoveFromCart", "Order", FormMethod.Post))
+                        {
+                            @Html.Hidden("orderId", order.Id) <!-- Hidden field for Order ID -->
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Grand Total: @grandTotal.ToString() BDT</h3>
+
+<div class="form-group">
+<label for="paymentMethod">Select Payment Method:</label>
+<select id="paymentMethod" class="form-control" style="width: 200px;">
+    <option value="Bkash">Bkash</option>
+    <option value="VISA">VISA</option>
+    <option value="CashOnDelivery">Cash On Delivery</option>
+</select>
+</div>
+
+
+@using (Html.BeginForm("Checkout", "Order", FormMethod.Post))
+{
+
+    <button type="submit" class="btn btn-success">Checkout</button>
+}

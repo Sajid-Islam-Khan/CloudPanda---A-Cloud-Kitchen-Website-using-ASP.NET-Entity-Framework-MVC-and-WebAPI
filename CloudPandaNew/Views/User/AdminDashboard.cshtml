@@ -1,0 +1,71 @@
+﻿@model CloudPanda.Models.ViewModels.AdminViewModel
+@{
+    ViewBag.Title = "AdminDashboard";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("Franchises", "FranchisePage", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Meals", "MealPage", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Log Out", "ClearLogin", "User", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Admin Dashboard</h2>
+
+<!-- Include jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include the Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div style="width: 60%; margin: auto;">
+    <canvas id="adminBarChart"></canvas>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var ctx = document.getElementById('adminBarChart').getContext('2d');
+        var adminBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Users', 'Franchises', 'Meals', 'Orders'],
+                datasets: [{
+                    label: 'Total Count',
+                    data: [@Model.Users, @Model.Franchises, @Model.Meals, @Model.Orders],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

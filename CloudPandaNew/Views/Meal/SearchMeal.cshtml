@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "SearchMeal";
+}
+
+<h2>Search Meal</h2>
+
+<div class="search-container">
+    <input type="text" id="meal-search" placeholder="Search for meals..." oninput="searchMeals()" />
+</div>
+
+<div id="meal-results">
+    <!-- Meal results will be dynamically added here -->
+</div>
+
+@section Scripts {
+    <script>
+        // Function to dynamically search meals based on input
+        function searchMeals() {
+            const keyword = document.getElementById("meal-search").value;
+            const buyerArea = "Banasree"; // You can dynamically set this based on user input or other logic
+
+            // Ensure the keyword is not empty before making the API call
+            if (keyword.trim() === "") {
+                document.getElementById("meal-results").innerHTML = ""; // Clear results
+                return;
+            }
+
+            // Make an AJAX request to the API
+            fetch(`/api/SearchMeal?keyword=${keyword}&buyerArea=${buyerArea}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(meals => {
+                // Clear the previous results
+                const resultsDiv = document.getElementById("meal-results");
+                resultsDiv.innerHTML = "";
+
+                if (meals.length === 0) {
+                    resultsDiv.innerHTML = "<p>No meals found.</p>";
+                    return;
+                }
+
+                // Update the DOM with new results
+                meals.forEach(meal => {
+                    const mealDiv = document.createElement("div");
+                    mealDiv.classList.add("meal-item");
+
+                    mealDiv.innerHTML = `
+                        <h3>${meal.Name}</h3>
+                        <p>Price: $${meal.Price.toFixed(2)}</p>
+                        <p>${meal.Description || 'No description available.'}</p>
+                    `;
+
+                    resultsDiv.appendChild(mealDiv);
+                });
+            })
+            .catch(error => {
+                console.error("Error during fetch:", error);
+                document.getElementById("meal-results").innerHTML = "<p>Error fetching meals.</p>";
+            });
+        }
+    </script>
+}

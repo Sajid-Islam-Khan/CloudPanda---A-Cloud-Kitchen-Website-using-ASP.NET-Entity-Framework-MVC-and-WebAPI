@@ -1,0 +1,40 @@
+﻿@model CloudPandaNew.Context.SellerFranchise
+
+@{
+    ViewBag.Title = "Enroll in a Franchise";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Seller Dashboard", "SellerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Franchises", "SellerMyFranchises", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Enroll Franchise", "EnrollFranchise", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Enroll Franchise</h2>
+<hr />
+
+@using (Html.BeginForm("EnrollFranchise", "SellerFranchise", FormMethod.Post))
+{
+    <div class="container">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            @Html.LabelFor(x => x.FranchiseId, "Select a Franchise")
+            @Html.DropDownListFor(x => x.FranchiseId, (SelectList)ViewBag.Franchises, "Select Franchise", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.FranchiseId, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            <input id="enrollBtn" type="submit" value="Enroll" class="btn btn-primary" />
+        </div>
+    </div>
+}

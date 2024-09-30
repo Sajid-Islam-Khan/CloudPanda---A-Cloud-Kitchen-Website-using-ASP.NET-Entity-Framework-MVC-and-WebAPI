@@ -1,0 +1,81 @@
+﻿@using CloudPandaNew.Context
+@model CloudPandaNew.Context.Franchise
+
+@{
+    ViewBag.Title = "AddFranchise";
+}
+
+
+<style>
+    .nav-link {
+        color: #333 !important; /* Darker text color */
+    }
+
+        .nav-link:hover {
+            color: #111 !important; /* Even darker on hover */
+        }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("Home", "AdminDashboard", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Franchises", "FranchisePage", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Meals", "MealPage", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Add a new Franchise", "AddFranchise", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<style>
+    .rederr {
+        color: red;
+        font-size: xx-small;
+    }
+</style>
+<br />
+<h2>Save Franchise Information</h2>
+<hr />
+
+@using (Html.BeginForm("CreateFranchise", "Franchise", FormMethod.Post))
+{
+    <div class="container">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @value = Model?.Name ?? "" })
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Description)
+            @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @value = Model?.Description ?? "" })
+            @Html.ValidationMessageFor(x => x.Description, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DateAdded)
+            @if (ViewBag.NoData == 0)
+            {
+                @Html.EditorFor(x => x.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
+
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.DateAdded, new { @class = "form-control", @type = "date", @Value = Model?.DateAdded.ToString("yyyy-MM-dd") ?? "" })
+
+
+
+            }
+            @Html.ValidationMessageFor(x => x.DateAdded, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            <input id="saveBtn" type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+}

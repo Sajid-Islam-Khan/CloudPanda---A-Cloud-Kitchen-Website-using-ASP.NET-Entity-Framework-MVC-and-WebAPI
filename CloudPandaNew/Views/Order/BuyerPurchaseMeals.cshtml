@@ -1,0 +1,73 @@
+﻿@model CloudPanda.Models.ViewModels.PurchaseMealViewModel
+
+
+@{
+    ViewBag.Title = "BuyerPurchaseMeals";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Buyer Dashboard", "BuyerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "BuyerProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Purchase Meals", "BuyerPurchaseMeals", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Search Meal", "SearchMeal", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Purchase Meals</h2>
+
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Seller Name</th>
+        <th>Rating</th>
+        <th>Franchises</th>
+    </tr>
+
+    @foreach (var seller in Model.Sellers)
+    {
+        <tr>
+            <td>@seller.Username</td>
+            <td>@seller.Rating</td>
+            <td>
+                <ul>
+                    @foreach (var franchise in seller.SellerFranchises)
+                    {
+                        <li>
+                            <b>@franchise.Franchise.Name</b> - @franchise.Franchise.Description
+                            <ul>
+                                @foreach (var meal in franchise.Franchise.Meals)
+                                {
+                                    <li>
+                                        <b>@meal.Name</b> - @meal.Description
+                                        <br />Price: @meal.Price
+                                        <form action="/Order/AddToCart" method="post">
+                                            <input type="hidden" name="sellerId" value="@seller.Id" />
+                                            <input type="hidden" name="mealId" value="@meal.Id" />
+                                            <input type="hidden" name="buyerId" value="@Session["id"]" />
+                                            <label>Quantity:</label>
+                                            <input type="number" name="quantity" value="1" min="1" />
+                                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                        </form>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+

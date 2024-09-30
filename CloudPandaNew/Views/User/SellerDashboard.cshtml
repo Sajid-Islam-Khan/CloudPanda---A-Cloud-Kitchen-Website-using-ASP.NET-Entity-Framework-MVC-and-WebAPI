@@ -1,0 +1,51 @@
+﻿@model CloudPanda.Models.ViewModels.SellerViewModel
+
+@{
+    ViewBag.Title = "SellerDashboard";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Seller Dashboard", "SellerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "MyProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("My Franchises", "SellerMyFranchises", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Enroll Franchise", "EnrollFranchise", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Log Out", "ClearLogin", "User", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>My Orders</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Meal Name</th>
+            <th>Order Time</th>
+            <th>Buyer Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>
+                    <ul>
+                        @foreach (var meal in order.OrderMeal.Meals)
+                        {
+                            <li> <b> @meal.Name </b> <i>@meal.Description</i>  @meal.Price BDT </li>
+                        }
+                    </ul>
+                </td>
+                <td>@order.OrderTime.ToString("MMMM dd, yyyy HH:mm:ss")</td>
+                <td>@order.User.FullName</td>
+            </tr>
+        }
+    </tbody>
+</table>

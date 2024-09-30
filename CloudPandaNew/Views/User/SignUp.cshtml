@@ -1,0 +1,76 @@
+﻿
+@using CloudPandaNew.Context
+@model CloudPandaNew.Context.User
+
+@{
+    ViewBag.Title = "SignUp";
+}
+
+<style>
+    .rederr {
+        color: red;
+        font-size: xx-small;
+    }
+</style>
+
+<h2>SignUp</h2>
+<br />
+<a href="@Url.Action("Login", "User")" class="btn btn-secondary">Sign In</a>
+
+
+<hr />
+
+@using (Html.BeginForm("SignUp", "User", FormMethod.Post))
+{
+    <div class="container">
+        <div class="form-group">
+            @Html.LabelFor(x => x.FullName)
+            @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Username)
+            @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Username, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Password)
+            @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.RePassword)
+            @Html.EditorFor(x => x.RePassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.RePassword, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email)
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhoneNumber)
+            @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address)
+            @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Area)
+            @Html.TextBoxFor(x => x.Area, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Area, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Role)
+            @Html.DropDownListFor(x => x.Role, new SelectList(Enum.GetValues(typeof(UserRole))), "--Select--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Role, "", new { @class = "rederr" })
+        </div>
+        <div class="form-group">
+            <input id="btnSignUp" type="submit" value="Sign Up" class="btn btn-primary" />
+            <a href="@Url.Action("ClearSignUp")" class="btn btn-danger">Clear</a>
+        </div>
+    </div>
+}

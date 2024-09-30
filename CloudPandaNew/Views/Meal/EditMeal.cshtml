@@ -1,0 +1,76 @@
+﻿@using CloudPandaNew.Context
+@model CloudPandaNew.Context.Meal
+
+@{
+    ViewBag.Title = "Edit Meal";
+}
+
+<style>
+    .nav-link {
+        color: #333 !important;
+    }
+
+        .nav-link:hover {
+            color: #111 !important;
+        }
+
+    .rederr {
+        color: red;
+        font-size: xx-small;
+    }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("Home", "AdminDashboard", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Franchises", "FranchisePage", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Meals", "MealPage", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Add a new Meal", "AddMeal", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Edit Meal</h2>
+<hr />
+
+@using (Html.BeginForm("CreateMeal", "Meal", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id) <!-- Hidden field for meal ID -->
+
+    <div class="container">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Price)
+            @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Price, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Description)
+            @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Description, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.FranchiseId, "Franchise")
+            @Html.DropDownListFor(x => x.FranchiseId, (SelectList)ViewBag.FranchiseList, "Select Franchise", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.FranchiseId, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            <input id="saveBtn" type="submit" value="Save Changes" class="btn btn-primary" />
+        </div>
+    </div>
+}

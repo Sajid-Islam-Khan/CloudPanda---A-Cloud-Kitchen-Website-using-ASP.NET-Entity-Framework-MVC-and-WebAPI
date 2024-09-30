@@ -1,0 +1,66 @@
+﻿@model List<CloudPandaNew.Context.Franchise>
+
+@{
+    ViewBag.Title = "My Franchises";
+}
+
+<style>
+    .nav-link {
+        color: #333 !important; /* Darker text color */
+    }
+
+        .nav-link:hover {
+            color: #111 !important; /* Even darker on hover */
+        }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Seller Dashboard", "SellerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Franchises", "SellerMyFranchises", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Enroll Franchise", "EnrollFranchise", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('hide');
+        box.style.display = 'none';
+    }, 5000);
+</script>
+
+<br />
+<h2>My Franchises</h2>
+<hr />
+<br />
+
+
+<hr />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var franchise in Model)
+        {
+            <tr>
+                <td>@franchise.Name</td>
+                <td>@franchise.Description</td>
+                <td>@franchise.DateAdded.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,99 @@
+﻿@model CloudPandaNew.Context.User
+@{
+    ViewBag.Title = "EditProfile";
+}
+
+<style>
+    .nav-link {
+        color: #333 !important;
+    }
+
+    .rederr {
+        color: red;
+        font-size: xx-small;
+    }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Buyer Dashboard", "BuyerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "BuyerProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Purchase Meals", "BuyerPurchaseMeals", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Search Meal", "SearchMeal", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Log Out", "ClearLogin", "User", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Edit Profile</h2>
+
+@using (Html.BeginForm("EditBuyerProfile", "User", FormMethod.Post))
+{
+    <div class="container">
+        @Html.HiddenFor(x => x.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Username)
+            @Html.EditorFor(x => x.Username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Username, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Password)
+            @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.FullName)
+            @Html.EditorFor(x => x.FullName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email)
+            @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Role)
+            @Html.DisplayFor(x => x.Role, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhoneNumber)
+            @Html.EditorFor(x => x.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Address)
+            @Html.EditorFor(x => x.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Area)
+            @Html.EditorFor(x => x.Area, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.Area, "", new { @class = "rederr" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Rating)
+            @Html.DisplayFor(x => x.Rating, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            <input id="saveBtn" type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+}

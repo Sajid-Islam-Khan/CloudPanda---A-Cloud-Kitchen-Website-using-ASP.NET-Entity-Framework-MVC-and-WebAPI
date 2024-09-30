@@ -1,0 +1,89 @@
+﻿@model List<CloudPandaNew.Context.Franchise>
+
+@{
+    ViewBag.Title = "FranchisePage";
+}
+
+<style>
+    .nav-link {
+        color: #333 !important; /* Darker text color */
+    }
+
+        .nav-link:hover {
+            color: #111 !important; /* Even darker on hover */
+        }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("Home", "AdminDashboard", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Franchises", "FranchisePage", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Meals", "MealPage", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Add a new Franchise", "AddFranchise", "Franchise", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('hide');
+        box.style.display = 'none';
+    }, 5000);</script>
+<br />
+<h2>Franchise Information</h2>
+<hr />
+<br />
+@if (TempData["MsgAdd"] != null)
+{
+    <div id="hide" , class="alert alert-success">
+        <strong>Good Work !! </strong> @TempData["MsgAdd"]
+    </div>
+}
+@if (TempData["MsgRem"] != null)
+{
+    <div id="hide" , class="alert alert-danger">
+        <strong>Warning !! </strong> @TempData["MsgRem"]
+    </div>
+}
+@if (TempData["MsgMod"] != null)
+{
+    <div id="hide" , class="alert alert-info">
+        <strong>Congratulations !! </strong> @TempData["MsgMod"]
+    </div>
+}
+<hr />
+
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Joining Date</th>
+        <th>Options</th>
+    </tr>
+
+    @foreach (var items in Model)
+    {
+        <tr>
+            <td>@items.Name</td>
+            <td>@items.Description</td>
+            <td>@items.DateAdded.ToString().Substring(0, 8)</td>
+            <td>
+                <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("AddFranchise", new { items.Id, items.Name, items.Description, items.DateAdded })'">
+                    <i class="glyphicon glyphicon-edit"></i> Edit
+                </button>
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("DeleteFranchise", new { items.Id })'">
+                    <i class="glyphicon glyphicon-remove"></i> Delete
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>

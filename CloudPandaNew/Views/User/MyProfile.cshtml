@@ -1,0 +1,55 @@
+﻿@model List<CloudPandaNew.Context.User>
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Seller Dashboard", "SellerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "MyProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("My Franchises", "SellerMyFranchises", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Enroll Franchise", "EnrollFranchise", "SellerFranchise", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h2>Profile</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>User Name</th>
+        <th>Password</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Area</th>
+        <th>Options</th>
+    </tr>
+
+    @foreach (var items in Model)
+    {
+        <tr>
+            <td>@items.Username</td>
+            <td>@items.Password</td>
+            <td>@items.FullName</td>
+            <td>@items.Email</td>
+            <td>@items.PhoneNumber</td>
+            <td>@items.Address</td>
+            <td>@items.Area</td>
+            <td>
+                <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("EditProfile", new { items.Id, items.Username, items.Password, items.FullName, items.Email, items.PhoneNumber, items.Address, items.Area,})'">
+                    <i class="glyphicon glyphicon-edit"></i> Edit
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>

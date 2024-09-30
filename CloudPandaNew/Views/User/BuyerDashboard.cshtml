@@ -1,0 +1,80 @@
+﻿@model CloudPanda.Models.ViewModels.BuyerViewModel
+@{
+    ViewBag.Title = "Buyer Dashboard";
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light rounded-5">
+    <div class="container">
+        @Html.ActionLink("Buyer Dashboard", "BuyerDashboard", "User", new { area = "" }, new { @class = "navbar-brand" })
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li>@Html.ActionLink("My Profile", "BuyerProfile", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Purchase Meals", "BuyerPurchaseMeals", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Search Meal", "SearchMeal", "Meal", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Log Out", "ClearLogin", "User", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<h2>Sellers in your area</h2>
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Seller Name</th>
+        <th>Franchises</th>
+    </tr>
+
+    @foreach (var seller in Model.Sellers)
+    {
+        <tr>
+            <td>@seller.Username</td>
+            <td>
+                <ul>
+                    @foreach (var franchise in seller.SellerFranchises)
+                    {
+                        <li> <b> @franchise.Franchise.Name </b> @franchise.Franchise.Description </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<h2>Check out our new franchises</h2>
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Meals</th>
+    </tr>
+
+    @foreach (var franchise in Model.Franchises)
+    {
+        <tr>
+            <td>@franchise.Name</td>
+            <td>@franchise.Description</td>
+            <td>
+                <ul>
+                    @foreach (var meal in franchise.Meals)
+                    {
+                        <li> <b> @meal.Name </b> <i>@meal.Description</i>  @meal.Price BDT </li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    }
+
+</table>
+
